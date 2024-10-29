@@ -24,6 +24,18 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        github: {
+          50: "#f6f8fa",
+          100: "#ebeef1",
+          200: "#d0d7de",
+          300: "#8b949e",
+          400: "#6e7781",
+          500: "#57606a",
+          600: "#424a53",
+          700: "#32383f",
+          800: "#24292f",
+          900: "#1b1f24",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
