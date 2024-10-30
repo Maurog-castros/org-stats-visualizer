@@ -48,10 +48,13 @@ export const getRepoStats = async (orgName: string): Promise<RepoStats[]> => {
   
   const repoStats = await Promise.all(
     repos.slice(0, 10).map(async (repo) => {
-      const [{ data: commits }, { data: contributors }] = await Promise.all([
+      const [{ data: commits }, { data: contributors }, { data: commitActivity }] = await Promise.all([
         octokit.repos.listCommits({ owner: orgName, repo: repo.name }),
         octokit.repos.listContributors({ owner: orgName, repo: repo.name }),
+        octokit.repos.getCommitActivityStats({ owner: orgName, repo: repo.name }),
       ]);
+
+      const yearlyCommits = commitActivity ? commitActivity.reduce((sum, week) => sum + week.total, 0) : 0;
 
       return {
         name: repo.name,
@@ -60,6 +63,7 @@ export const getRepoStats = async (orgName: string): Promise<RepoStats[]> => {
         issues: repo.open_issues_count,
         commits: commits.length,
         contributors: contributors.length,
+        yearlyCommits,
       };
     })
   );

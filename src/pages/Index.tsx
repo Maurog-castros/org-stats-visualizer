@@ -4,6 +4,7 @@ import { getOrgStats, getRepoStats, getTeamMembers } from "@/lib/github";
 import { StatCard } from "@/components/StatCard";
 import { RepoChart } from "@/components/RepoChart";
 import { ContributorsChart } from "@/components/ContributorsChart";
+import { YearlyCommitsChart } from "@/components/YearlyCommitsChart";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -11,7 +12,6 @@ import {
   Users,
   GitFork,
   Star,
-  GitPullRequest,
   Building2,
 } from "lucide-react";
 
@@ -23,7 +23,7 @@ const Index = () => {
   const { data: orgStats, isLoading: loadingOrg } = useQuery({
     queryKey: ["org", searchOrg],
     queryFn: () => getOrgStats(searchOrg),
-    onError: () => {
+    onError: (error) => {
       toast({
         title: "Error",
         description: "Failed to load organization data. Please check the organization name.",
@@ -111,6 +111,7 @@ const Index = () => {
                     title="Repository Forks"
                     color="#7286D3"
                   />
+                  <YearlyCommitsChart data={repoStats} />
                 </div>
               )}
 
