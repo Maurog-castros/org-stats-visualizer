@@ -16,19 +16,21 @@ import {
 } from "lucide-react";
 
 const Index = () => {
-  const [orgName, setOrgName] = useState("vercel");
-  const [searchOrg, setSearchOrg] = useState("vercel");
+  const [orgName, setOrgName] = useState("HDICL");
+  const [searchOrg, setSearchOrg] = useState("HDICL");
   const { toast } = useToast();
 
   const { data: orgStats, isLoading: loadingOrg } = useQuery({
     queryKey: ["org", searchOrg],
     queryFn: () => getOrgStats(searchOrg),
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to load organization data. Please check the organization name.",
-        variant: "destructive",
-      });
+    options: {
+      onError: () => {
+        toast({
+          title: "Error",
+          description: "Failed to load organization data. Please check the organization name.",
+          variant: "destructive",
+        });
+      },
     },
   });
 
